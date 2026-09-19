@@ -33,10 +33,6 @@
   var video = document.querySelector('.hero-film video');
   if (video) {
     video.playbackRate = 0.55; // slow the smoke drift for a calm, soothing feel
-    video.addEventListener('loadeddata', function () {
-      if (video.currentTime < 2) video.currentTime = 2; // skip the empty lead-in
-    });
-    video.addEventListener('seeked', function () { if (video.paused) video.play().catch(function () {}); });
     video.addEventListener('error', function () {
       video.closest('.hero').classList.add('film-dead');
     });
