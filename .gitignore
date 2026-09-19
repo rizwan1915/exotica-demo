@@ -2,3 +2,6 @@ node_modules/
 *.bak
 .DS_Store
 dist/
+server-log.txt
+srv-err.txt
+srv-out.txt

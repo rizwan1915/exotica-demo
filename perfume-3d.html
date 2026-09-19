@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House of Vivian Exotica — Parfum</title>
+<!-- Optional webfonts; gracefully degrade to Georgia / system serif when offline (file://) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Page chrome ---------- */
+  html, body { margin:0; padding:0; height:100%; overflow:hidden; background:#050505; }
+  #scene { position:fixed; inset:0; display:block; touch-action:none; cursor:grab; }
+  #scene.dragging { cursor:grabbing; }
+
+  /* Subtle vignette over the WebGL canvas */
+  #vignette {
+    position:fixed; inset:0; pointer-events:none; z-index:2;
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 42%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.5) 100%);
+  }
+
+  /* ---------- Typographic overlay (never intercepts input) ---------- */
+  #overlay { position:fixed; inset:0; pointer-events:none; z-index:3; color:#D8B95C;
+             font-family:'Cormorant Garamond','Playfair Display',Georgia,'Times New Roman',serif; }
+
+  .kicker {
+    position:absolute; top:4.5vh; left:0; right:0; text-align:center;
+    font-size:clamp(10px, 1.3vw, 15px); font-weight:500;
+    letter-spacing:0.62em; text-indent:0.62em; /* indent compensates trailing tracking */
+    color:#C9A848; text-shadow:0 0 18px rgba(212,175,55,0.35);
+  }
+  .kicker::before, .kicker::after {
+    content:""; display:inline-block; vertical-align:middle; width:9vw; height:1px; margin:0 1.6em;
+    background:linear-gradient(90deg, transparent, #8a6a1f); opacity:0.7;
+  }
+  .kicker::after { background:linear-gradient(90deg, #8a6a1f, transparent); }
+
+  .wordmark {
+    position:absolute; bottom:9vh; left:0; right:0; text-align:center;
+    font-size:clamp(44px, 9vw, 118px); font-weight:400; line-height:1;
+    letter-spacing:0.28em; text-indent:0.28em; color:#E6C86E;
+    text-shadow:0 0 30px rgba(212,175,55,0.28), 0 2px 22px rgba(0,0,0,0.9);
+  }
+  .wordmark .thin { opacity:0.85; }
+
+  .footer {
+    position:absolute; bottom:2.6vh; left:0; right:0; text-align:center;
+    font-size:clamp(9px, 1.05vw, 13px); letter-spacing:0.42em; text-indent:0.42em;
+    color:#8a743a; opacity:0.9;
+  }
+
+  .hint {
+    position:absolute; top:4.5vh; right:2.2vw; font-size:10px; letter-spacing:0.3em;
+    color:#6d5a2c; writing-mode:vertical-rl; opacity:0.8;
+  }
+
+  @media (max-width:640px){ .hint{ display:none; } }
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="vignette"></div>
+
+<div id="overlay">
+  <div class="kicker">HOUSE OF VIVIAN EXOTICA</div>
+  <div class="wordmark">EXO<span class="thin">T</span>ICA</div>
+  <div class="footer">Maison Exotica &nbsp;&middot;&nbsp; Since MMXXV</div>
+  <div class="hint">DRAG TO ORBIT &middot; SCROLL TO ZOOM</div>
+</div>
+
+<!-- three.js r160 classic global build (works over file:// via jsDelivr) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+// APP_JS_START
+/* ============================================================================
+   HOUSE OF VIVIAN EXOTICA — perfume showcase
+   Self-contained three.js r160 scene. No modules, no external assets:
+   the crest is drawn procedurally on a 2D canvas and used as a CanvasTexture.
+   Hand-rolled orbit/zoom controls (OrbitControls was removed from examples/js).
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  if (typeof THREE === 'undefined') {
+    document.body.insertAdjacentHTML('beforeend',
+      '<p style="color:#C9A848;font-family:Georgia,serif;position:fixed;top:50%;width:100%;text-align:center">three.js could not be loaded — an internet connection is required once.</p>');
+    return;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Renderer / scene / camera                                          */
+  /* ------------------------------------------------------------------ */
+  const canvas   = document.getElementById('scene');
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;          // sRGB output
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;        // filmic response
+  renderer.toneMappingExposure = 1.15;
+  renderer.setClearColor(0x050505, 1);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x050505, 0.028);
+
+  const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+  const camTarget = new THREE.Vector3(0, 1.55, 0);
+
+  /* ------------------------------------------------------------------ */
+  /* Procedural crest texture (embedded approximation of logo.png)      */
+  /* ------------------------------------------------------------------ */
+  function goldGrad(ctx, x0, y0, x1, y1) {
+    const g = ctx.createLinearGradient(x0, y0, x1, y1);
+    g.addColorStop(0.00, '#8a6a1f');
+    g.addColorStop(0.35, '#D4AF37');
+    g.addColorStop(0.55, '#F0D98C');
+    g.addColorStop(0.80, '#D4AF37');
+    g.addColorStop(1.00, '#9a7a26');
+    return g;
+  }
+
+  // Manual letterspaced text (ctx.letterSpacing is not universally available)
+  function drawSpaced(ctx, text, cx, y, tracking) {
+    let total = 0;
+    for (const ch of text) total += ctx.measureText(ch).width + tracking;
+    total -= tracking;
+    let x = cx - total / 2;
+    for (const ch of text) { ctx.fillText(ch, x, y); x += ctx.measureText(ch).width + tracking; }
+  }
+
+  // Heater shield outline centred on (cx, cy), width w, height h
+  function shieldPath(ctx, cx, cy, w, h) {
+    const x0 = cx - w / 2, x1 = cx + w / 2, top = cy, bot = cy + h;
+    ctx.beginPath();
+    ctx.moveTo(x0, top);
+    ctx.lineTo(x1, top);
+    ctx.bezierCurveTo(x1, top + h * 0.42, x1 - w * 0.06, top + h * 0.72, cx, bot);
+    ctx.bezierCurveTo(x0 + w * 0.06, top + h * 0.72, x0, top + h * 0.42, x0, top);
+    ctx.closePath();
+  }
+
+  // Small crown silhouette centred on (cx, cy)
+  function drawCrown(ctx, cx, cy, s) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(s, s);
+    ctx.fillStyle = goldGrad(ctx, -60, -60, 60, 60);
+    ctx.strokeStyle = 'rgba(90,66,15,0.9)';
+    ctx.lineWidth = 3;
+
+    // band with pearls
+    ctx.beginPath(); ctx.rect(-58, 18, 116, 22); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.rect(-58, 34, 116, 6); ctx.fill();
+    for (let i = -2; i <= 2; i++) {
+      ctx.beginPath(); ctx.arc(i * 24, 29, 5.5, 0, Math.PI * 2); ctx.fill();
+    }
+    // three arches with orb tips
+    ctx.beginPath();
+    ctx.moveTo(-52, 18);
+    ctx.bezierCurveTo(-52, -28, -14, -40, -14, -40);
+    ctx.bezierCurveTo(-2, -30, 2, -30, 14, -40);
+    ctx.bezierCurveTo(14, -40, 52, -28, 52, 18);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // central peak
+    ctx.beginPath();
+    ctx.moveTo(-16, 16); ctx.quadraticCurveTo(0, -52, 16, 16);
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+    // orbs on tips
+    [[-14, -44], [0, -56], [14, -44]].forEach(p => {
+      ctx.beginPath(); ctx.arc(p[0], p[1], 6, 0, Math.PI * 2); ctx.fill();
+    });
+    // cross finial
+    ctx.fillRect(-3, -82, 6, 22);
+    ctx.fillRect(-10, -75, 20, 6);
+    ctx.restore();
+  }
+
+  // Stylised fleur-de-lis centred on (cx, cy)
+  function drawFleur(ctx, cx, cy, s) {
+    ctx.save();
+    ctx.translate(cx, cy); ctx.scale(s, s);
+    ctx.fillStyle = goldGrad(ctx, -20, -20, 20, 20);
+    ctx.beginPath(); // centre petal
+    ctx.moveTo(0, -22);
+    ctx.bezierCurveTo(9, -10, 8, 4, 4, 14); ctx.lineTo(-4, 14);
+    ctx.bezierCurveTo(-8, 4, -9, -10, 0, -22);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath(); // left petal
+    ctx.moveTo(-4, 6); ctx.bezierCurveTo(-16, 2, -20, -8, -18, -16);
+    ctx.bezierCurveTo(-10, -12, -6, -2, -4, 6); ctx.fill();
+    ctx.beginPath(); // right petal
+    ctx.moveTo(4, 6); ctx.bezierCurveTo(16, 2, 20, -8, 18, -16);
+    ctx.bezierCurveTo(10, -12, 6, -2, 4, 6); ctx.fill();
+    ctx.fillRect(-2, 14, 4, 10);
+    ctx.beginPath(); ctx.arc(0, 27, 3.4, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  // Baroque scroll flourish (a curl used to suggest the flanking lions/vines)
+  function drawCurl(ctx, x, y, r, a0, a1, lw) {
+    ctx.beginPath(); ctx.arc(x, y, r, a0, a1);
+    ctx.lineWidth = lw; ctx.stroke();
+  }
+
+  function makeCrestTexture(px) {
+    const W = px, H = Math.round(px * 1.25);
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
+    const cx = W / 2;
+    const u = W / 1024;                                   // design-space unit
+
+    ctx.clearRect(0, 0, W, H);
+
+    /* --- crown ------------------------------------------------------ */
+    drawCrown(ctx, cx, 150 * u, 1.9 * u);
+
+    /* --- ornamental flanking scrolls --------------------------------- */
+    ctx.strokeStyle = goldGrad(ctx, cx - 340 * u, 0, cx + 340 * u, 0);
+    ctx.lineCap = 'round';
+    drawCurl(ctx, cx - 300 * u, 430 * u,  90 * u, -0.4 * Math.PI, 0.65 * Math.PI, 9 * u);
+    drawCurl(ctx, cx - 250 * u, 560 * u,  60 * u,  0.7 * Math.PI, 1.9 * Math.PI, 7 * u);
+    drawCurl(ctx, cx - 330 * u, 620 * u,  42 * u, -0.2 * Math.PI, 1.2 * Math.PI, 6 * u);
+    drawCurl(ctx, cx + 300 * u, 430 * u,  90 * u,  0.35 * Math.PI, 1.4 * Math.PI, 9 * u);
+    drawCurl(ctx, cx + 250 * u, 560 * u,  60 * u,  1.2 * Math.PI, 2.4 * Math.PI, 7 * u);
+    drawCurl(ctx, cx + 330 * u, 620 * u,  42 * u,  1.9 * Math.PI, 3.3 * Math.PI, 6 * u);
+
+    /* --- shield (dark enamel fill + double gold border) --------------- */
+    ctx.save();
+    shieldPath(ctx, cx, 330 * u, 430 * u, 560 * u);
+    ctx.fillStyle = 'rgba(10,8,4,0.62)';
+    ctx.fill();
+    ctx.lineWidth = 13 * u;
+    ctx.strokeStyle = goldGrad(ctx, 0, 330 * u, 0, 890 * u);
+    ctx.stroke();
+    // inner hairline border (same path scaled about shield centre)
+    ctx.translate(cx, 330 * u + 280 * u);
+    ctx.scale(0.92, 0.94);
+    ctx.translate(-cx, -(330 * u + 280 * u));
+    shieldPath(ctx, cx, 330 * u, 430 * u, 560 * u);
+    ctx.lineWidth = 4.5 * u;
+    ctx.strokeStyle = 'rgba(240,217,140,0.9)';
+    ctx.stroke();
+    ctx.restore();
+
+    /* --- interior ornaments ------------------------------------------ */
+    drawFleur(ctx, cx, 405 * u, 1.5 * u);
+
+    // suggestion of the two rampant lions: symmetric heraldic curls
+    ctx.strokeStyle = 'rgba(212,175,55,0.75)';
+    drawCurl(ctx, cx - 120 * u, 600 * u, 46 * u, 0.4 * Math.PI, 2.1 * Math.PI, 6 * u);
+    drawCurl(ctx, cx + 120 * u, 600 * u, 46 * u, 1.05 * Math.PI, 2.75 * Math.PI, 6 * u);
+    drawCurl(ctx, cx - 105 * u, 690 * u, 26 * u, -0.3 * Math.PI, 1.4 * Math.PI, 4.5 * u);
+    drawCurl(ctx, cx + 105 * u, 690 * u, 26 * u, 1.75 * Math.PI, 3.45 * Math.PI, 4.5 * u);
+
+    /* --- the great "V" ------------------------------------------------ */
+    ctx.fillStyle = goldGrad(ctx, cx - 90 * u, 430 * u, cx + 90 * u, 760 * u);
+    ctx.font = '600 ' + Math.round(330 * u) + 'px Georgia, "Times New Roman", serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    drawSpaced(ctx, 'V', cx, 745 * u, 0);
+
+    /* --- wordmark ------------------------------------------------------ */
+    ctx.fillStyle = '#D4AF37';
+    ctx.font = '500 ' + Math.round(52 * u) + 'px Georgia, serif';
+    drawSpaced(ctx, 'HOUSE OF', cx, 985 * u, 20 * u);
+    ctx.font = '500 ' + Math.round(66 * u) + 'px Georgia, serif';
+    ctx.fillStyle = goldGrad(ctx, cx - 300 * u, 0, cx + 300 * u, 0);
+    drawSpaced(ctx, 'VIVIAN EXOTICA', cx, 1075 * u, 16 * u);
+
+    /* --- bottom flourish divider --------------------------------------- */
+    ctx.strokeStyle = 'rgba(212,175,55,0.8)';
+    ctx.lineWidth = 2.5 * u;
+    ctx.beginPath();
+    ctx.moveTo(cx - 210 * u, 1135 * u); ctx.lineTo(cx - 24 * u, 1135 * u);
+    ctx.moveTo(cx + 24 * u, 1135 * u);  ctx.lineTo(cx + 210 * u, 1135 * u);
+    ctx.stroke();
+    ctx.fillStyle = '#D4AF37';
+    ctx.save();
+    ctx.translate(cx, 1135 * u); ctx.rotate(Math.PI / 4);
+    ctx.fillRect(-9 * u, -9 * u, 18 * u, 18 * u);
+    ctx.restore();
+    drawCurl(ctx, cx - 234 * u, 1135 * u, 16 * u, 0.5 * Math.PI, 2.5 * Math.PI, 2.5 * u);
+    drawCurl(ctx, cx + 234 * u, 1135 * u, 16 * u, 1.5 * Math.PI, 3.5 * Math.PI, 2.5 * u);
+
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return tex;
+  }
+
+  const crestTex = makeCrestTexture(1024);
+
+  /* ------------------------------------------------------------------ */
+  /* Procedural equirect environment (drives glass / gold / floor)      */
+  /* ------------------------------------------------------------------ */
+  function makeEnvTexture() {
+    const cv = document.createElement('canvas');
+    cv.width = 512; cv.height = 256;
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#050504';
+    ctx.fillRect(0, 0, 512, 256);
+
+    // warm glows that become glints on metal and glass
+    const glow = (x, y, r, c) => {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, c); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, 512, 256);
+    };
+    glow(150, 80, 90, 'rgba(255,214,130,0.95)');   // key warm light
+    glow(390, 95, 70, 'rgba(212,175,55,0.55)');    // gold rim
+    glow(60, 140, 55, 'rgba(120,80,20,0.5)');      // faint amber fill
+    glow(450, 150, 50, 'rgba(90,60,15,0.45)');
+    ctx.fillStyle = 'rgba(200,160,80,0.18)';       // faint horizon band
+    ctx.fillRect(0, 122, 512, 6);
+
+    const tex = new THREE.CanvasTexture(cv);
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }
+  const envTex = makeEnvTexture();
+  scene.environment = envTex;
+
+  /* ------------------------------------------------------------------ */
+  /* Shared materials                                                   */
+  /* ------------------------------------------------------------------ */
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color: 0xfff8ec, metalness: 0, roughness: 0.05,
+    transmission: 0.9, thickness: 0.6, ior: 1.5,
+    clearcoat: 1.0, clearcoatRoughness: 0.08, envMapIntensity: 1.3
+  });
+  const liquidMat = new THREE.MeshPhysicalMaterial({
+    color: 0xc9791a, metalness: 0, roughness: 0.12,
+    transmission: 0.72, thickness: 1.1, ior: 1.34,
+    attenuationColor: new THREE.Color(0xb35c08), attenuationDistance: 1.6,
+    envMapIntensity: 0.8
+  });
+  const goldMat = new THREE.MeshStandardMaterial({
+    color: 0xd4af37, metalness: 1.0, roughness: 0.26, envMapIntensity: 1.5
+  });
+  // Gold-foil label: gold crest over transparent, faint emissive keeps it readable
+  const labelMat = new THREE.MeshStandardMaterial({
+    map: crestTex, transparent: true, metalness: 0.85, roughness: 0.35,
+    emissive: 0x6b4e14, emissiveMap: crestTex, emissiveIntensity: 0.55,
+    envMapIntensity: 1.2, depthWrite: false,
+    polygonOffset: true, polygonOffsetFactor: -2
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Floor — glossy near-black, mirror-like via env map + low roughness */
+  /* ------------------------------------------------------------------ */
+  const floor = new THREE.Mesh(
+    new THREE.CircleGeometry(18, 72),
+    new THREE.MeshStandardMaterial({
+      color: 0x0a0a0c, metalness: 0.88, roughness: 0.16, envMapIntensity: 1.1
+    })
+  );
+  floor.rotation.x = -Math.PI / 2;
+  scene.add(floor);
+
+  // Soft contact shadows (radial-gradient sprites) under each bottle
+  function makeContactShadow(radius) {
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = 128;
+    const c = cv.getContext('2d');
+    const g = c.createRadialGradient(64, 64, 4, 64, 64, 62);
+    g.addColorStop(0, 'rgba(0,0,0,0.85)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    c.fillStyle = g; c.fillRect(0, 0, 128, 128);
+    const t = new THREE.CanvasTexture(cv);
+    const m = new THREE.Mesh(
+      new THREE.PlaneGeometry(radius * 2, radius * 2),
+      new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false })
+    );
+    m.rotation.x = -Math.PI / 2;
+    m.position.y = 0.012;
+    return m;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* The three bottles                                                  */
+  /* ------------------------------------------------------------------ */
+  const bottles = [];   // { group, baseY, phase } for the bob animation
+  function registerBottle(group, phase) {
+    group.userData.phase = phase;
+    bottles.push(group);
+  }
+
+  // (a) Tall slender faceted bottle -------------------------------------
+  function buildFacetedBottle() {
+    const g = new THREE.Group();
+
+    const flatGlass = glassMat.clone();
+    flatGlass.flatShading = true;
+
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.64, 2.6, 8, 1), flatGlass);
+    body.position.y = 1.55;
+    const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.52, 0.38, 8, 1), flatGlass);
+    shoulder.position.y = 3.04;
+    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.34, 16), glassMat);
+    neck.position.y = 3.4;
+    const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.21, 0.44, 16), goldMat);
+    cap.position.y = 3.79;
+    const capTop = new THREE.Mesh(new THREE.SphereGeometry(0.21, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), goldMat);
+    capTop.position.y = 4.01;
+
+    const liquid = new THREE.Mesh(new THREE.CylinderGeometry(0.43, 0.55, 1.85, 8, 1), liquidMat);
+    liquid.position.y = 1.2;
+
+    // crest label on the front facet (plane tangent to the octagon)
+    const label = new THREE.Mesh(new THREE.PlaneGeometry(0.82, 1.02), labelMat);
+    const facetR = 0.575 * Math.cos(Math.PI / 8);       // apothem at label height
+    label.position.set(0, 1.62, facetR + 0.015);
+
+    // tiny crest medallion on the cap
+    const medal = new THREE.Mesh(
+      new THREE.CircleGeometry(0.085, 32),
+      new THREE.MeshBasicMaterial({ map: crestTex, transparent: true, toneMapped: false })
+    );
+    medal.position.set(0, 3.79, 0.212);
+
+    g.add(body, shoulder, neck, cap, capTop, liquid, label, medal);
+    g.add(makeContactShadow(1.05));
+    return g;
+  }
+
+  // (b) Rounded lathe flacon --------------------------------------------
+  function buildLatheBottle() {
+    const g = new THREE.Group();
+
+    const pts = [
+      new THREE.Vector2(0.001, 0.0),
+      new THREE.Vector2(0.62, 0.0),
+      new THREE.Vector2(0.98, 0.32),
+      new THREE.Vector2(1.08, 0.85),
+      new THREE.Vector2(0.98, 1.42),
+      new THREE.Vector2(0.55, 1.8),
+      new THREE.Vector2(0.24, 1.94),
+      new THREE.Vector2(0.2, 2.1)
+    ].map(p => p.clone().multiplyScalar(0.92));
+    const body = new THREE.Mesh(new THREE.LatheGeometry(pts, 48), glassMat);
+
+    const liqPts = [
+      new THREE.Vector2(0.001, 0.02),
+      new THREE.Vector2(0.5, 0.05),
+      new THREE.Vector2(0.86, 0.38),
+      new THREE.Vector2(0.94, 0.85),
+      new THREE.Vector2(0.86, 1.28),
+      new THREE.Vector2(0.5, 1.6),
+      new THREE.Vector2(0.001, 1.68)
+    ].map(p => p.clone().multiplyScalar(0.9));
+    const liquid = new THREE.Mesh(new THREE.LatheGeometry(liqPts, 40), liquidMat);
+
+    const neckRing = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.24, 0.14, 24), goldMat);
+    neckRing.position.y = 1.93;
+    const cap = new THREE.Mesh(new THREE.SphereGeometry(0.27, 24, 16), goldMat);
+    cap.position.y = 2.14;
+    cap.scale.y = 1.25;
+
+    // curved label hugging the belly (open cylinder segment facing +z)
+    const labelGeo = new THREE.CylinderGeometry(1.02, 1.02, 1.05, 40, 1, true, -0.52, 1.04);
+    const label = new THREE.Mesh(labelGeo, labelMat);
+    label.position.y = 0.88;
+
+    g.add(body, liquid, neckRing, cap, label);
+    g.add(makeContactShadow(1.25));
+    return g;
+  }
+
+  // (c) Square Art-Deco block with diamond-faceted octahedron cap --------
+  function buildDecoBottle() {
+    const g = new THREE.Group();
+
+    const plinth = new THREE.Mesh(new THREE.BoxGeometry(1.72, 0.2, 1.72), glassMat);
+    plinth.position.y = 0.1;
+    const body = new THREE.Mesh(new THREE.BoxGeometry(1.5, 2.05, 1.5), glassMat);
+    body.position.y = 1.22;
+    const step = new THREE.Mesh(new THREE.BoxGeometry(1.02, 0.26, 1.02), glassMat);
+    step.position.y = 2.48;
+
+    // diamond-faceted octahedron cap (the one faceted cap of the trio)
+    const cap = new THREE.Mesh(new THREE.OctahedronGeometry(0.34, 0), goldMat.clone());
+    cap.material.flatShading = true;
+    cap.scale.y = 1.45;
+    cap.position.y = 3.05;
+
+    const liquid = new THREE.Mesh(new THREE.BoxGeometry(1.24, 1.72, 1.24), liquidMat);
+    liquid.position.y = 1.08;
+
+    const label = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.31), labelMat);
+    label.position.set(0, 1.32, 0.762);
+
+    // gold medallion on the cap's front face
+    const medal = new THREE.Mesh(
+      new THREE.CircleGeometry(0.1, 32),
+      new THREE.MeshBasicMaterial({ map: crestTex, transparent: true, toneMapped: false })
+    );
+    medal.position.set(0, 3.05, 0.245);
+
+    g.add(plinth, body, step, cap, liquid, label, medal);
+    g.add(makeContactShadow(1.35));
+    return g;
+  }
+
+  const showcase = new THREE.Group();   // everything that gently sways together
+  const bA = buildFacetedBottle(); bA.position.set(-2.55, 0, 0.35);
+  const bB = buildLatheBottle();   bB.position.set(0, 0, -0.45);
+  const bC = buildDecoBottle();    bC.position.set(2.55, 0, 0.35);
+  showcase.add(bA, bB, bC);
+  scene.add(showcase);
+
+  registerBottle(bA, 0.0);
+  registerBottle(bB, 2.1);
+  registerBottle(bC, 4.2);
+
+  /* ------------------------------------------------------------------ */
+  /* Lighting                                                           */
+  /* ------------------------------------------------------------------ */
+  scene.add(new THREE.AmbientLight(0x2a2118, 0.9));
+
+  const keyLight = new THREE.DirectionalLight(0xfff1d6, 2.4);
+  keyLight.position.set(4, 7, 5);
+  scene.add(keyLight);
+
+  const rimL = new THREE.DirectionalLight(0xd4af37, 2.0);   // warm gold rim
+  rimL.position.set(-6, 4, -5);
+  scene.add(rimL);
+
+  const rimR = new THREE.DirectionalLight(0xf0d98c, 1.4);
+  rimR.position.set(6, 3, -6);
+  scene.add(rimR);
+
+  // Moving gold point light — sweeps around for travelling glints
+  const sweep = new THREE.PointLight(0xffc861, 40, 18, 2);
+  sweep.position.set(0, 3.2, 3);
+  scene.add(sweep);
+
+  /* ------------------------------------------------------------------ */
+  /* Rising additive sparkles                                           */
+  /* ------------------------------------------------------------------ */
+  const SPARKS = 260;
+  const sparkPos = new Float32Array(SPARKS * 3);
+  const sparkVel = new Float32Array(SPARKS);
+  for (let i = 0; i < SPARKS; i++) {
+    sparkPos[i * 3]     = (Math.random() - 0.5) * 11;
+    sparkPos[i * 3 + 1] = Math.random() * 6.5;
+    sparkPos[i * 3 + 2] = (Math.random() - 0.5) * 9;
+    sparkVel[i] = 0.12 + Math.random() * 0.35;
+  }
+  const sparkGeo = new THREE.BufferGeometry();
+  sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
+  const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({
+    color: 0xf0d98c, size: 0.055, transparent: true, opacity: 0.85,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  }));
+  scene.add(sparks);
+
+  /* ------------------------------------------------------------------ */
+  /* Hand-rolled orbit controls (drag + wheel), auto-rotate on idle     */
+  /* ------------------------------------------------------------------ */
+  const ctrl = {
+    theta: 0, phi: 1.12, radius: 9.2,          // current
+    tTheta: 0, tPhi: 1.12, tRadius: 9.2,       // targets (damped toward)
+    dragging: false, lastX: 0, lastY: 0,
+    lastInput: -1e4                            // seconds of last user input
+  };
+  const PHI_MIN = 0.45, PHI_MAX = 1.42, R_MIN = 4.5, R_MAX = 16;
+
+  canvas.addEventListener('pointerdown', (e) => {
+    ctrl.dragging = true; ctrl.lastX = e.clientX; ctrl.lastY = e.clientY;
+    ctrl.lastInput = clock.getElapsedTime();
+    canvas.classList.add('dragging');
+    canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!ctrl.dragging) return;
+    ctrl.tTheta -= (e.clientX - ctrl.lastX) * 0.0052;
+    ctrl.tPhi   -= (e.clientY - ctrl.lastY) * 0.0038;
+    ctrl.tPhi = Math.min(PHI_MAX, Math.max(PHI_MIN, ctrl.tPhi));
+    ctrl.lastX = e.clientX; ctrl.lastY = e.clientY;
+    ctrl.lastInput = clock.getElapsedTime();
+  });
+  const endDrag = () => { ctrl.dragging = false; canvas.classList.remove('dragging'); };
+  canvas.addEventListener('pointerup', endDrag);
+  canvas.addEventListener('pointercancel', endDrag);
+
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    ctrl.tRadius *= (1 + Math.sign(e.deltaY) * 0.09);
+    ctrl.tRadius = Math.min(R_MAX, Math.max(R_MIN, ctrl.tRadius));
+    ctrl.lastInput = clock.getElapsedTime();
+  }, { passive: false });
+
+  /* ------------------------------------------------------------------ */
+  /* Resize                                                             */
+  /* ------------------------------------------------------------------ */
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  /* ------------------------------------------------------------------ */
+  /* Render loop                                                        */
+  /* ------------------------------------------------------------------ */
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    const dt = Math.min(clock.getDelta(), 0.05);
+
+    // Auto-rotate: a gentle azimuth sway (keeps labels readable, unlike a
+    // full turntable); pauses while the user interacts, resumes after 2.5 s.
+    const idle = (t - ctrl.lastInput) > 2.5;
+    const sway = idle ? Math.sin(t * 0.14) * 0.55 : 0;
+
+    // damping toward control targets
+    ctrl.theta  += (ctrl.tTheta - ctrl.theta) * 0.08;
+    ctrl.phi    += (ctrl.tPhi - ctrl.phi) * 0.08;
+    ctrl.radius += (ctrl.tRadius - ctrl.radius) * 0.08;
+
+    const az = ctrl.theta + sway;
+    camera.position.set(
+      camTarget.x + ctrl.radius * Math.sin(ctrl.phi) * Math.sin(az),
+      camTarget.y + ctrl.radius * Math.cos(ctrl.phi),
+      camTarget.z + ctrl.radius * Math.sin(ctrl.phi) * Math.cos(az)
+    );
+    camera.lookAt(camTarget);
+
+    // per-bottle phase-offset floating bob + faint individual sway
+    for (const b of bottles) {
+      const ph = b.userData.phase;
+      b.position.y = Math.sin(t * 0.9 + ph) * 0.05;
+      b.rotation.y = Math.sin(t * 0.22 + ph) * 0.06;
+    }
+    showcase.rotation.y = Math.sin(t * 0.1) * 0.04;   // very slow group drift
+
+    // moving gold point-light sweep
+    sweep.position.set(Math.sin(t * 0.55) * 4.6, 2.6 + Math.sin(t * 0.8) * 0.7, Math.cos(t * 0.55) * 4.2);
+
+    // rising sparkles with wrap-around
+    const p = sparkGeo.attributes.position.array;
+    for (let i = 0; i < SPARKS; i++) {
+      p[i * 3 + 1] += sparkVel[i] * dt;
+      p[i * 3]     += Math.sin(t * 0.6 + i) * 0.0015;   // faint lateral drift
+      if (p[i * 3 + 1] > 6.8) p[i * 3 + 1] = 0.05;
+    }
+    sparkGeo.attributes.position.needsUpdate = true;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+// APP_JS_END
+</script>
+</body>
+</html>

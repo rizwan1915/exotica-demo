@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>House of Vivian Exotica — Luxury Perfume House</title>
-<meta name="description" content="House of Vivian Exotica — a royal red & gold luxury perfume house. Demo homepage.">
+<title>House of Vivian Exotica — An Essence. An Inheritance.</title>
+<meta name="description" content="House of Vivian Exotica — a maison of rare attars. Noir Sultana, Oud Royale, Rose Sultana, Amber d'Or.">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body id="top">
@@ -12,98 +12,83 @@
 <header class="site-header" id="siteHeader">
   <div class="container nav">
     <a class="brand" href="#top" aria-label="House of Vivian Exotica — home">
-      <small>Maison de Parfum</small>
-      <strong>Vivian <em>Exotica</em></strong>
+      <span class="crest has-logo" id="crest">
+        <span class="crest-fallback" aria-hidden="true">
+          <small>House of</small>
+          <strong>V.E.</strong>
+          <span>Exotica</span>
+        </span>
+        <img src="assets/logo.png" alt="House of Vivian Exotica crest" onerror="this.remove();document.getElementById('crest').classList.remove('has-logo')">
+      </span>
     </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#signature">Signature</a></li>
-      <li><a href="#collections">Collections</a></li>
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-cta">
-      <button class="icon-btn" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
-      <button class="icon-btn" aria-label="Shopping bag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></button>
-      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    </div>
+    <nav aria-label="Primary">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#signature">The Signature</a></li>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#maison">The Maison</a></li>
+        <li><a href="#enquire">Enquire</a></li>
+      </ul>
+    </nav>
+    <a class="nav-note" href="#collections">Discover your scent <span>&nearr;</span></a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <main>
   <!-- ================= HERO ================= -->
   <section class="hero" id="hero">
-    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-film" aria-hidden="true">
-      <video autoplay muted loop playsinline src="assets/hero-video.mp4"></video>
+      <video autoplay muted loop playsinline preload="auto" src="assets/hero-video.mp4"></video>
     </div>
-    <div class="silk" aria-hidden="true"></div>
-    <div class="silk s2" aria-hidden="true"></div>
+    <div class="hero-smoke" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
     <div class="hero-vignette" aria-hidden="true"></div>
-    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
-    <div class="hero-inner">
-      <span class="est">Maison de Parfum &middot; Est. MMXXIV</span>
-      <h1>
-        <span class="line"><span>Wear the</span></span>
-        <span class="line"><span class="gold">Royal Essence</span></span>
-      </h1>
-      <p class="tag">Rare ouds, sacred roses &amp; golden ambers — composed for those who enter a room like a legend.</p>
-      <div class="hero-ctas">
-        <a class="btn btn--solid" href="#collections">Explore the Collection</a>
-        <a class="btn" href="#signature">Discover the Signature</a>
+    <div class="hero-inner" style="text-align:center">
+      <span class="eyebrow reveal">The Art of Leaving an Impression</span>
+      <h1 class="reveal d1">An essence.<br><em>An inheritance.</em></h1>
+      <p class="reveal d2">Rare oud. Velvet rose. The warmth of golden amber.<br>A world of fragrance, composed for the unforgettable.</p>
+      <div class="reveal d3">
+        <a class="btn btn--solid" href="#collections">Enter the Collection <span>&nearr;</span></a>
       </div>
     </div>
 
-    <div class="scroll-cue" aria-hidden="true">
-      <div class="mouse"></div>
-      <span>Scroll</span>
+    <div class="hero-bottom">
+      <span class="hero-edition">N&ordm; 01 &mdash; Noir Sultana <span>&middot;</span> The Discovery Set</span>
+      <a class="scroll-link" href="#signature">Scroll <span>&darr;</span></a>
     </div>
   </section>
 
-  <!-- ================= MARQUEE ================= -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Hand-Poured Attars</span><span>Rare Oud</span><span>Taif Rose</span><span>Gold Accords</span><span>Small-Batch Luxury</span><span>Cruelty Free</span>
-      <span>Hand-Poured Attars</span><span>Rare Oud</span><span>Taif Rose</span><span>Gold Accords</span><span>Small-Batch Luxury</span><span>Cruelty Free</span>
-    </div>
+  <!-- ================= HOUSE BAND ================= -->
+  <div class="house-band" aria-hidden="true">
+    <span>House of Vivian Exotica</span>
+    <span>A Maison of Rare Attars</span>
+    <span>Lahore &middot; Est. MMXXIV</span>
   </div>
 
   <!-- ================= SIGNATURE ================= -->
-  <section class="section signature" id="signature">
+  <section class="section" id="signature">
     <div class="container signature-grid">
-      <div class="bottle-stage reveal" data-bottle="noir">
-        <svg class="bottle" viewBox="0 0 200 340" role="img" aria-label="Vivian Exotica signature perfume bottle">
-          <defs>
-            <linearGradient id="liquidGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#a81d38"/>
-              <stop offset="55%" stop-color="#6d1223"/>
-              <stop offset="100%" stop-color="#310a16"/>
-            </linearGradient>
-            <linearGradient id="capGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#f7e3ab"/>
-              <stop offset="45%" stop-color="#c5943a"/>
-              <stop offset="100%" stop-color="#9c742a"/>
-            </linearGradient>
-          </defs>
-          <rect class="cap" x="78" y="8" width="44" height="52" rx="6"/>
-          <rect x="88" y="60" width="24" height="18" fill="#c5943a" opacity=".85"/>
-          <path class="liquid" d="M50 96 h100 a14 14 0 0 1 14 14 v170 a26 26 0 0 1 -14 12 h-100 a14 14 0 0 1 -14 -12 v-170 a14 14 0 0 1 14 -14 z"/>
-          <rect class="glassline" x="58" y="104" width="10" height="180" rx="5"/>
-          <rect class="shine" x="76" y="112" width="7" height="120" rx="3.5" opacity=".7"/>
-          <text x="100" y="216" text-anchor="middle" font-family="Georgia, serif" font-size="17" letter-spacing="4" fill="#f7e3ab">VIVIAN</text>
-          <text x="100" y="240" text-anchor="middle" font-family="Georgia, serif" font-size="11" letter-spacing="6" fill="#f0d285" opacity=".85">EXOTICA</text>
-        </svg>
+      <div class="signature-art will-reveal">
+        <span class="art-index">01 &mdash; The Signature</span>
+        <div class="product-visual signature-visual" data-bottle="noir">
+          <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>VIVIAN</b><span>SULTANA NOIR</span></div></div>
+        </div>
+        <span class="art-caption">A study in crimson &amp; gold<br><span class="model-hint">Drag to explore the 3D concept</span></span>
       </div>
       <div class="sig-copy">
-        <span class="eyebrow reveal">The Signature</span>
-        <h2 class="reveal d1">Noir Sultana<br><em class="gold-text" style="font-size:.62em">Eau de Parfum &middot; 100ml</em></h2>
-        <p class="reveal d2" style="color:var(--cream-dim);margin-top:22px">Our crown jewel. A velvet oud wrapped in Damask rose and saffron, resting on a throne of golden amber. One breath — and the room remembers you.</p>
-        <div class="notes reveal d2">
-          <div class="note-card"><b>Taif Rose</b><span>Top</span></div>
-          <div class="note-card"><b>Smoked Oud</b><span>Heart</span></div>
-          <div class="note-card"><b>Golden Amber</b><span>Base</span></div>
+        <span class="eyebrow will-reveal">The Signature</span>
+        <h2 class="will-reveal d1">Noir<br><em>Sultana.</em></h2>
+        <span class="product-format will-reveal d2">Eau de Parfum &nbsp;/&nbsp; 100 ML</span>
+        <p class="will-reveal d2">A velvet oud wrapped in Damask rose and saffron, resting on a bed of golden amber. Dark, enveloping, quietly unforgettable.</p>
+        <dl class="notes will-reveal d3">
+          <div><dt>Opening</dt><dd>Taif Rose</dd></div>
+          <div><dt>Heart</dt><dd>Smoked Oud</dd></div>
+          <div><dt>Lasting Impression</dt><dd>Golden Amber</dd></div>
+        </dl>
+        <div class="signature-action will-reveal d3">
+          <span>Rs 14,500</span>
+          <a class="text-link" href="#enquire">Enquire about Noir Sultana <span>&nearr;</span></a>
         </div>
-        <a class="btn btn--solid reveal d3" href="#collections">Acquire &mdash; Rs 14,500</a>
       </div>
     </div>
   </section>
@@ -111,94 +96,115 @@
   <!-- ================= COLLECTIONS ================= -->
   <section class="section collections" id="collections">
     <div class="container">
-      <div class="section-head">
-        <span class="eyebrow reveal">The Collections</span>
-        <h2 class="reveal d1">Three Houses of Scent</h2>
-        <p class="reveal d2">Each flacon is hand-filled, wax-sealed and crowned in gold.</p>
+      <div class="collection-heading">
+        <div>
+          <span class="eyebrow will-reveal">The Collections</span>
+          <h2 class="will-reveal d1">Find your<br><em>after-dark signature.</em></h2>
+        </div>
+        <p class="will-reveal d2">These distinct moods.<br>Choose the one that feels like you.</p>
       </div>
+
       <div class="coll-grid">
-        <article class="coll-card reveal">
-          <div class="aura" aria-hidden="true"></div>
-          <svg viewBox="0 0 200 340" aria-hidden="true"><rect x="78" y="8" width="44" height="52" rx="6" fill="#e0b45e"/><path d="M50 96 h100 a14 14 0 0 1 14 14 v170 a26 26 0 0 1 -14 12 h-100 a14 14 0 0 1 -14 -12 v-170 a14 14 0 0 1 14 -14 z" fill="#6d1223"/><text x="100" y="212" text-anchor="middle" font-family="Georgia" font-size="15" letter-spacing="3" fill="#f7e3ab">OUD</text><text x="100" y="234" text-anchor="middle" font-family="Georgia" font-size="10" letter-spacing="5" fill="#f0d285" opacity=".8">ROYALE</text></svg>
-          <span class="shop">Shop Now</span>
-          <h3>Oud Royale</h3>
-          <div class="accords">Cambodian Oud &middot; Saffron &middot; Leather</div>
-          <div class="price">From Rs 12,900</div>
+        <article class="coll-card will-reveal">
+          <div class="product-scene scene-oud">
+            <div class="scene-top"><span>01 / Woody</span><span>Eau de Parfum</span></div>
+            <div class="product-visual" data-bottle="oud">
+              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>OUD ROYALE</span></div></div>
+            </div>
+            <span class="scene-word" aria-hidden="true">Woody</span>
+          </div>
+          <div class="product-info">
+            <span class="scent-mood">Deep. Smoldering. Magnetic.</span>
+            <h3>Oud Royale</h3>
+            <p>Cambodian Oud &middot; Saffron &middot; Leather</p>
+            <div class="product-bottom">
+              <span>From Rs 12,900</span>
+              <a href="#enquire">Discover <span>&nearr;</span></a>
+            </div>
+          </div>
         </article>
-        <article class="coll-card reveal d1">
-          <div class="aura" aria-hidden="true"></div>
-          <svg viewBox="0 0 200 340" aria-hidden="true"><rect x="78" y="8" width="44" height="52" rx="6" fill="#f0d285"/><path d="M50 96 h100 a14 14 0 0 1 14 14 v170 a26 26 0 0 1 -14 12 h-100 a14 14 0 0 1 -14 -12 v-170 a14 14 0 0 1 14 -14 z" fill="#8e1730"/><text x="100" y="212" text-anchor="middle" font-family="Georgia" font-size="15" letter-spacing="3" fill="#f7e3ab">ROSE</text><text x="100" y="234" text-anchor="middle" font-family="Georgia" font-size="10" letter-spacing="5" fill="#f0d285" opacity=".8">SULTANA</text></svg>
-          <span class="shop">Shop Now</span>
-          <h3>Rose Sultana</h3>
-          <div class="accords">Taif Rose &middot; Raspberry &middot; Musk</div>
-          <div class="price">From Rs 11,500</div>
+
+        <article class="coll-card will-reveal d1">
+          <div class="product-scene scene-rose">
+            <div class="scene-top"><span>02 / Floral</span><span>Eau de Parfum</span></div>
+            <div class="product-visual" data-bottle="rose">
+              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>ROSE SULTANA</span></div></div>
+            </div>
+            <span class="scene-word" aria-hidden="true">Floral</span>
+          </div>
+          <div class="product-info">
+            <span class="scent-mood">Velvet petals. A wild heart.</span>
+            <h3>Rose Sultana</h3>
+            <p>Taif Rose &middot; Raspberry &middot; Musk</p>
+            <div class="product-bottom">
+              <span>From Rs 11,500</span>
+              <a href="#enquire">Discover <span>&nearr;</span></a>
+            </div>
+          </div>
         </article>
-        <article class="coll-card reveal d2">
-          <div class="aura" aria-hidden="true"></div>
-          <svg viewBox="0 0 200 340" aria-hidden="true"><rect x="78" y="8" width="44" height="52" rx="6" fill="#c5943a"/><path d="M50 96 h100 a14 14 0 0 1 14 14 v170 a26 26 0 0 1 -14 12 h-100 a14 14 0 0 1 -14 -12 v-170 a14 14 0 0 1 14 -14 z" fill="#48101f"/><text x="100" y="212" text-anchor="middle" font-family="Georgia" font-size="15" letter-spacing="3" fill="#f7e3ab">AMBER</text><text x="100" y="234" text-anchor="middle" font-family="Georgia" font-size="10" letter-spacing="5" fill="#f0d285" opacity=".8">D&apos;OR</text></svg>
-          <span class="shop">Shop Now</span>
-          <h3>Amber d&apos;Or</h3>
-          <div class="accords">Golden Amber &middot; Vanilla &middot; Tonka</div>
-          <div class="price">From Rs 10,900</div>
+
+        <article class="coll-card will-reveal d1">
+          <div class="product-scene scene-amber">
+            <div class="scene-top"><span>03 / Amber</span><span>Eau de Parfum</span></div>
+            <div class="product-visual" data-bottle="amber">
+              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>AMBER D'OR</span></div></div>
+            </div>
+            <span class="scene-word" aria-hidden="true">Amber</span>
+          </div>
+          <div class="product-info">
+            <span class="scent-mood">Golden warmth. Endless evening.</span>
+            <h3>Amber d&rsquo;Or</h3>
+            <p>Golden Amber &middot; Vanilla &middot; Tonka</p>
+            <div class="product-bottom">
+              <span>From Rs 10,900</span>
+              <a href="#enquire">Discover <span>&nearr;</span></a>
+            </div>
+          </div>
         </article>
       </div>
+
+      <p class="concept-note">Interactive 3D flacons concept. Final product packaging may differ.</p>
     </div>
   </section>
 
-  <!-- ================= STORY ================= -->
-  <section class="section story" id="story">
+  <!-- ================= THE MAISON ================= -->
+  <section class="section" id="maison">
     <div class="container story-grid">
-      <div class="story-visual reveal">
-        <div class="frame" aria-hidden="true"></div>
-        <div class="monogram" aria-hidden="true">V</div>
+      <div class="story-mark will-reveal">
+        <span>V</span>
+        <small>House of Vivian<br>Maison de Parfum</small>
       </div>
       <div class="story-copy">
-        <span class="eyebrow reveal">Our Story</span>
-        <h2 class="reveal d1">Born of Silk Roads<br>&amp; Royal Courts</h2>
-        <p class="reveal d2">House of Vivian Exotica began with a single conviction — that a fragrance is not worn, it is inherited. Drawing upon centuries of oriental perfumery, our atelier blends rare resins, hand-picked roses and aged ouds into compositions worthy of a maharaja&apos;s court.</p>
-        <p class="reveal d2">Every flacon is filled by hand in small batches, sealed in crimson wax and finished with 24k gilding. We do not chase seasons. We craft legacies.</p>
-        <div class="story-stats reveal d3">
-          <div class="stat"><b class="gold-text">14+</b><span>Rare Ingredients</span></div>
-          <div class="stat"><b class="gold-text">100%</b><span>Hand Poured</span></div>
-          <div class="stat"><b class="gold-text">48h</b><span>Maturation</span></div>
-        </div>
+        <span class="eyebrow will-reveal">Inside the Maison</span>
+        <h2 class="will-reveal d1">Not just worn.<br><em>Remembered.</em></h2>
+        <p class="will-reveal d2">Inspired by the Silk Roads and the intimacy of oriental perfumery, House of Vivian Exotica explores the meeting of rare resins, rich florals and warm woods.</p>
+        <p class="will-reveal d2">Each composition is a world of its own. A personal ritual. A presence that lingers long after you have left.</p>
+        <a class="text-link will-reveal d3" href="#enquire">Begin your fragrance journey <span>&nearr;</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ================= RITUAL BAND ================= -->
-  <section class="ritual">
-    <div class="container">
-      <span class="eyebrow reveal">The Ritual</span>
-      <h2 class="reveal d1">An Ounce of Perfume,<br>an Hour of Immortality</h2>
-      <p class="reveal d2">Begin your journey with our discovery set — five royal accords in gilded vials, delivered in a crimson lacquer chest.</p>
-      <a class="btn reveal d3" href="#contact">Reserve the Discovery Set</a>
-    </div>
-  </section>
-
-  <!-- ================= TESTIMONIALS ================= -->
-  <section class="section testimonials">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow reveal">Whispers of the Court</span>
-        <h2 class="reveal d1">Worn &amp; Revered</h2>
+  <!-- ================= ENQUIRE ================= -->
+  <section class="section contact" id="enquire">
+    <div class="container contact-grid">
+      <div class="contact-copy">
+        <span class="eyebrow will-reveal">Your Invitation</span>
+        <h2 class="will-reveal d1">An introduction<br><em>to the extraordinary.</em></h2>
+        <p class="will-reveal d2">Explore a fragrance or enquire about the discovery set.</p>
       </div>
-      <div class="tst-grid">
-        <div class="tst reveal"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Noir Sultana is not a perfume, it is an entrance. Three compliments before I reached my table.&rdquo;</p><div class="who">&mdash; Ayesha K., Lahore</div></div>
-        <div class="tst reveal d1"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;The wax seal, the gilding, the weight of the flacon — everything whispers royalty.&rdquo;</p><div class="who">&mdash; Daniyal R., Karachi</div></div>
-        <div class="tst reveal d2"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Oud Royale lingers until the next morning. My signature now, and forever.&rdquo;</p><div class="who">&mdash; Fatima S., Dubai</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= NEWSLETTER ================= -->
-  <section class="section newsletter" id="contact">
-    <div class="container">
-      <span class="eyebrow reveal">Join the Inner Circle</span>
-      <h2 class="reveal d1">First Access to Rare Drops</h2>
-      <form onsubmit="event.preventDefault();this.querySelector(&apos;button&apos;).textContent=&apos;Welcome &amp;#10003;&apos;;">
-        <input type="email" placeholder="Your email address" aria-label="Email address" required>
-        <button type="submit">Subscribe</button>
+      <form id="enquiryForm" class="will-reveal d2">
+        <label for="interest">I'm interested in</label>
+        <select id="interest" name="interest">
+          <option>Discovery Set</option>
+          <option>Noir Sultana</option>
+          <option>Oud Royale</option>
+          <option>Rose Sultana</option>
+          <option>Amber d&rsquo;Or</option>
+        </select>
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        <button class="btn btn--solid" type="submit">Preview Enquiry</button>
+        <p class="form-note">Demo only &mdash; this form does not send or store your details.</p>
       </form>
     </div>
   </section>
@@ -206,28 +212,15 @@
 
 <footer class="site-footer">
   <div class="container foot">
-    <small>&copy; 2026 House of Vivian Exotica &mdash; Maison de Parfum</small>
-    <ul class="foot-links">
-      <li><a href="#">Instagram</a></li>
-      <li><a href="#">Facebook</a></li>
-      <li><a href="#">TikTok</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <span class="footer-brand">Vivian <em>Exotica</em></span>
+    <span>&copy; 2026 House of Vivian Exotica</span>
+    <a href="mailto:hello@example.com">Contact</a>
   </div>
 </footer>
 
-<script>
-(function(){
-  var header=document.getElementById(&apos;siteHeader&apos;);
-  addEventListener(&apos;scroll&apos;,function(){header.classList.toggle(&apos;scrolled&apos;,scrollY>40)},{passive:true});
-  var burger=document.getElementById(&apos;burger&apos;),links=document.getElementById(&apos;navLinks&apos;);
-  burger.addEventListener(&apos;click&apos;,function(){var o=links.classList.toggle(&apos;open&apos;);burger.setAttribute(&apos;aria-expanded&apos;,o)});
-  links.querySelectorAll(&apos;a&apos;).forEach(function(a){a.addEventListener(&apos;click&apos;,function(){links.classList.remove(&apos;open&apos;);burger.setAttribute(&apos;aria-expanded&apos;,&apos;false&apos;)})});
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add(&apos;visible&apos;);}})},{threshold:.15});
-  document.querySelectorAll(&apos;.reveal&apos;).forEach(function(el){io.observe(el)});
-  var sp=document.getElementById(&apos;sparkles&apos;);
-  for(var i=0;i<26;i++){var s=document.createElement(&apos;span&apos;);s.style.left=(Math.random()*100)+&apos;%&apos;;s.style.top=(Math.random()*100)+&apos;%&apos;;s.style.animationDelay=(Math.random()*6)+&apos;s&apos;;s.style.animationDuration=(4+Math.random()*5)+&apos;s&apos;;sp.appendChild(s)}
-})();
+<script src="js/site.js"></script>
+<script type="importmap">
+  {"imports":{"three":"./js/vendor/three.module.js","three/addons/":"./js/vendor/addons/"}}
 </script>
 <script type="module" src="js/bottles.js"></script>
 </body>
