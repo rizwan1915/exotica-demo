@@ -5,3 +5,6 @@ dist/
 server-log.txt
 srv-err.txt
 srv-out.txt
+
+.vercel
+.env*
