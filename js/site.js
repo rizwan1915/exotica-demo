@@ -32,7 +32,14 @@
   // Hero film — if the smoke video can't load, fall back to the CSS smoke layer
   var video = document.querySelector('.hero-film video');
   if (video) {
-    video.playbackRate = 0.55; // slow the smoke drift for a calm, soothing feel
+    var kickPlay = function () { video.play().catch(function () {}); };
+    video.addEventListener('loadedmetadata', function () {
+      try { video.playbackRate = 0.55; } catch (err) {} // set after metadata; iOS dislikes setting it early
+    });
+    video.addEventListener('canplay', kickPlay);
+    video.addEventListener('stalled', kickPlay);
+    document.getElementById('hero').addEventListener('pointerdown', kickPlay, { once: false });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) kickPlay(); });
     video.addEventListener('error', function () {
       video.closest('.hero').classList.add('film-dead');
     });
