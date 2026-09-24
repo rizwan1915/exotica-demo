@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /perfume-3d.html
+Disallow: /reports/
+Disallow: /scripts/
+Disallow: /pam-audit-report.html
+Disallow: /pam-audit-report.pdf
+Sitemap: https://exotica-demo.vercel.app/sitemap.xml

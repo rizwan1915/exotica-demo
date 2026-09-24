@@ -1,0 +1,94 @@
+{
+  "layouts": [
+    {
+      "width": 320,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 430,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 1024,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    },
+    {
+      "width": 1920,
+      "overflow": false,
+      "brokenImages": [],
+      "brokenAnchors": [],
+      "canvases": 0,
+      "h1": 1,
+      "interactionChecks": "passed"
+    }
+  ],
+  "errors": [],
+  "measurements": [
+    {
+      "lcp": 2152,
+      "cls": 0.0001830386447205266,
+      "longTasks": 52,
+      "bytes": 170130,
+      "fcp": 2072,
+      "canvasCount": 0
+    },
+    {
+      "lcp": 1936,
+      "cls": 0.0001830386447205266,
+      "longTasks": 0,
+      "bytes": 170130,
+      "fcp": 1872,
+      "canvasCount": 0
+    },
+    {
+      "lcp": 2080,
+      "cls": 0.0001830386447205266,
+      "longTasks": 0,
+      "bytes": 170130,
+      "fcp": 2012,
+      "canvasCount": 0
+    }
+  ]
+}

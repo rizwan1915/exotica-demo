@@ -1,227 +1,551 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>House of Vivian Exotica — An Essence. An Inheritance.</title>
-<meta name="description" content="House of Vivian Exotica — a maison of rare attars. Noir Sultana, Oud Royale, Rose Sultana, Amber d'Or.">
-<link rel="stylesheet" href="css/main.css">
-</head>
-<body id="top">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>House of Vivian Exotica — An Essence. An Inheritance.</title>
+    <meta
+      name="description"
+      content="House of Vivian Exotica — a maison of rare attars. Noir Sultana, Oud Royale, Rose Sultana, Amber d'Or."
+    />
+    <meta name="theme-color" content="#1b0b11" />
+    <link rel="canonical" href="https://exotica-demo.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="House of Vivian Exotica — An Essence. An Inheritance."
+    />
+    <meta
+      property="og:description"
+      content="Explore Noir Sultana, Oud Royale, Rose Sultana and Amber d’Or. A world of oud, rose and golden amber."
+    />
+    <meta property="og:url" content="https://exotica-demo.vercel.app/" />
+    <meta
+      property="og:image"
+      content="https://exotica-demo.vercel.app/assets/social-preview.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="House of Vivian Exotica — Noir Sultana perfume bottle"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link
+      rel="preload"
+      href="assets/noir-portrait.webp"
+      imagesrcset="assets/noir-portrait-small.webp 440w, assets/noir-portrait.webp 800w"
+      imagesizes="(max-width: 760px) 90vw, 45vw"
+      as="image"
+      fetchpriority="high"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header" id="siteHeader">
-  <div class="container nav">
-    <a class="brand" href="#top" aria-label="House of Vivian Exotica — home">
-      <span class="crest has-logo" id="crest">
-        <span class="crest-fallback" aria-hidden="true">
-          <small>House of</small>
-          <strong>V.E.</strong>
-          <span>Exotica</span>
-        </span>
-        <img src="assets/logo.png" alt="House of Vivian Exotica crest" onerror="this.remove();document.getElementById('crest').classList.remove('has-logo')">
-      </span>
-    </a>
-    <nav aria-label="Primary">
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#signature">The Signature</a></li>
-        <li><a href="#collections">Collections</a></li>
-        <li><a href="#maison">The Maison</a></li>
-        <li><a href="#enquire">Enquire</a></li>
-      </ul>
-    </nav>
-    <a class="nav-note" href="#collections">Discover your scent <span>&nearr;</span></a>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  </div>
-</header>
-
-<main>
-  <!-- ================= HERO ================= -->
-  <section class="hero" id="hero">
-    <div class="hero-film" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata" src="assets/hero-video.mp4"></video>
-    </div>
-    <div class="hero-smoke" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
-    <div class="hero-vignette" aria-hidden="true"></div>
-
-    <div class="hero-inner" style="text-align:center">
-      <span class="eyebrow reveal">The Art of Leaving an Impression</span>
-      <h1 class="reveal d1">An essence.<br><em>An inheritance.</em></h1>
-      <p class="reveal d2">Rare oud. Velvet rose. The warmth of golden amber.<br>A world of fragrance, composed for the unforgettable.</p>
-      <div class="reveal d3">
-        <a class="btn btn--solid" href="#collections">Enter the Collection <span>&nearr;</span></a>
+    <header class="site-header" id="siteHeader">
+      <div class="container nav">
+        <a
+          class="brand"
+          href="#top"
+          aria-label="House of Vivian Exotica — home"
+        >
+          <span class="crest has-logo" id="crest">
+            <span class="crest-fallback" aria-hidden="true">
+              <small>House of</small>
+              <strong>V.E.</strong>
+              <span>Exotica</span>
+            </span>
+            <img
+              src="assets/crest.webp"
+              width="160"
+              height="160"
+              alt="House of Vivian Exotica crest"
+              onerror="
+                this.remove();
+                document.getElementById('crest').classList.remove('has-logo');
+              "
+            />
+          </span>
+          <span class="brand-name"
+            >House of Vivian<small>EXOTICA · MAISON DE PARFUM</small></span
+          >
+        </a>
+        <nav aria-label="Primary">
+          <ul class="nav-links" id="navLinks">
+            <li><a href="#signature">The Signature</a></li>
+            <li><a href="#collections">Collections</a></li>
+            <li><a href="#maison">The Maison</a></li>
+            <li><a href="#enquire">Enquire</a></li>
+          </ul>
+        </nav>
+        <a class="nav-note" href="#collections"
+          >Discover your scent <span>&nearr;</span></a
+        >
+        <button
+          class="burger"
+          id="burger"
+          aria-label="Open menu"
+          aria-controls="navLinks"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
       </div>
-    </div>
+    </header>
 
-    <div class="hero-bottom">
-      <span class="hero-edition">N&ordm; 01 &mdash; Noir Sultana <span>&middot;</span> The Discovery Set</span>
-      <a class="scroll-link" href="#signature">Scroll <span>&darr;</span></a>
-    </div>
-  </section>
-
-  <!-- ================= HOUSE BAND ================= -->
-  <div class="house-band" aria-hidden="true">
-    <span>House of Vivian Exotica</span>
-    <span>A Maison of Rare Attars</span>
-    <span>Lahore &middot; Est. MMXXIV</span>
-  </div>
-
-  <!-- ================= SIGNATURE ================= -->
-  <section class="section" id="signature">
-    <div class="container signature-grid">
-      <div class="signature-art will-reveal">
-        <span class="art-index">01 &mdash; The Signature</span>
-        <div class="product-visual signature-visual" data-bottle="noir">
-          <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>VIVIAN</b><span>SULTANA NOIR</span></div></div>
+    <main id="main">
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="hero-smoke" aria-hidden="true">
+          <video
+            class="smoke-video"
+            muted
+            loop
+            playsinline
+            preload="none"
+            disablepictureinpicture
+            tabindex="-1"
+          ></video>
         </div>
-        <span class="art-caption">A study in crimson &amp; gold<br><span class="model-hint">Drag to explore the 3D concept</span></span>
-      </div>
-      <div class="sig-copy">
-        <span class="eyebrow will-reveal">The Signature</span>
-        <h2 class="will-reveal d1">Noir<br><em>Sultana.</em></h2>
-        <span class="product-format will-reveal d2">Eau de Parfum &nbsp;/&nbsp; 100 ML</span>
-        <p class="will-reveal d2">A velvet oud wrapped in Damask rose and saffron, resting on a bed of golden amber. Dark, enveloping, quietly unforgettable.</p>
-        <dl class="notes will-reveal d3">
-          <div><dt>Opening</dt><dd>Taif Rose</dd></div>
-          <div><dt>Heart</dt><dd>Smoked Oud</dd></div>
-          <div><dt>Lasting Impression</dt><dd>Golden Amber</dd></div>
-        </dl>
-        <div class="signature-action will-reveal d3">
-          <span>Rs 14,500</span>
-          <a class="text-link" href="#enquire">Enquire about Noir Sultana <span>&nearr;</span></a>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">The art of leaving an impression</span>
+            <h1 id="hero-title">An essence.<br /><em>An inheritance.</em></h1>
+            <p>
+              Rare oud. Velvet rose. The warmth of golden amber.<br />
+              A world of fragrance, composed for the unforgettable.
+            </p>
+            <a class="btn btn--solid" href="#collections"
+              >Explore the collection <span aria-hidden="true">↗</span></a
+            >
+            <a class="hero-secondary" href="#signature"
+              >Meet Noir Sultana <span aria-hidden="true">↓</span></a
+            >
+          </div>
+          <div class="hero-art">
+            <span class="hero-art-word" aria-hidden="true">Noir</span>
+            <div class="hero-orbit" aria-hidden="true"></div>
+            <div
+              class="product-visual hero-visual"
+              id="heroBottle"
+              data-bottle="noir"
+            >
+              <img
+                class="bottle-image"
+                src="assets/noir-portrait.webp"
+                srcset="
+                  assets/noir-portrait-small.webp 440w,
+                  assets/noir-portrait.webp       800w
+                "
+                sizes="(max-width: 760px) 90vw, 45vw"
+                width="700"
+                height="800"
+                alt="Noir Sultana concept bottle, with a gold cap and crimson perfume"
+                fetchpriority="high"
+              />
+            </div>
+            <div class="hero-art-caption">
+              <span
+                >Nº 01 — Noir Sultana<small>Eau de Parfum · 100 ML</small></span
+              ><button
+                data-motion-toggle
+                type="button"
+                aria-pressed="false"
+                hidden
+              >
+                Pause motion
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= COLLECTIONS ================= -->
-  <section class="section collections" id="collections">
-    <div class="container">
-      <div class="collection-heading">
-        <div>
-          <span class="eyebrow will-reveal">The Collections</span>
-          <h2 class="will-reveal d1">Find your<br><em>after-dark signature.</em></h2>
+        <div class="container hero-bottom">
+          <span>A maison of rare attars</span>
+          <button
+            class="smoke-toggle"
+            type="button"
+            aria-pressed="false"
+            hidden
+          >
+            Pause smoke
+          </button>
+          <a href="#signature"
+            >Discover the signature <span aria-hidden="true">↓</span></a
+          >
         </div>
-        <p class="will-reveal d2">These distinct moods.<br>Choose the one that feels like you.</p>
+      </section>
+
+      <!-- ================= HOUSE BAND ================= -->
+      <div class="house-band" aria-hidden="true">
+        <span>House of Vivian Exotica</span>
+        <span>A Maison of Rare Attars</span>
+        <span>Lahore &middot; Est. MMXXIV</span>
       </div>
 
-      <div class="coll-grid">
-        <article class="coll-card will-reveal">
-          <div class="product-scene scene-oud">
-            <div class="scene-top"><span>01 / Woody</span><span>Eau de Parfum</span></div>
-            <div class="product-visual" data-bottle="oud">
-              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>OUD ROYALE</span></div></div>
+      <!-- ================= SIGNATURE ================= -->
+      <section class="section" id="signature">
+        <div class="container signature-grid">
+          <div class="signature-art will-reveal">
+            <span class="art-index">01 &mdash; The Signature</span>
+            <div class="product-visual signature-visual" data-bottle="noir">
+              <img
+                class="bottle-image"
+                src="assets/noir-portrait.webp"
+                srcset="
+                  assets/noir-portrait-small.webp 440w,
+                  assets/noir-portrait.webp       800w
+                "
+                sizes="(max-width: 760px) 90vw, 45vw"
+                width="700"
+                height="800"
+                alt="Noir Sultana perfume bottle concept"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <span class="scene-word" aria-hidden="true">Woody</span>
+            <span class="art-caption"
+              >A study in crimson &amp; gold<br /><span class="model-hint"
+                >A 100 ML eau de parfum concept</span
+              ></span
+            >
           </div>
-          <div class="product-info">
-            <span class="scent-mood">Deep. Smoldering. Magnetic.</span>
-            <h3>Oud Royale</h3>
-            <p>Cambodian Oud &middot; Saffron &middot; Leather</p>
-            <div class="product-bottom">
-              <span>From Rs 12,900</span>
-              <a href="#enquire">Discover <span>&nearr;</span></a>
+          <div class="sig-copy">
+            <span class="eyebrow will-reveal">The Signature</span>
+            <h2 class="will-reveal d1">Noir<br /><em>Sultana.</em></h2>
+            <span class="product-format will-reveal d2"
+              >Eau de Parfum &nbsp;/&nbsp; 100 ML</span
+            >
+            <p class="will-reveal d2">
+              A velvet oud wrapped in Damask rose and saffron, resting on a bed
+              of golden amber. Dark, enveloping, quietly unforgettable.
+            </p>
+            <dl class="notes will-reveal d3">
+              <div>
+                <dt>Opening</dt>
+                <dd>Taif Rose</dd>
+              </div>
+              <div>
+                <dt>Heart</dt>
+                <dd>Smoked Oud</dd>
+              </div>
+              <div>
+                <dt>Lasting Impression</dt>
+                <dd>Golden Amber</dd>
+              </div>
+            </dl>
+            <div class="signature-action will-reveal d3">
+              <span>Rs 14,500</span>
+              <a class="text-link" href="#enquire" data-interest="Noir Sultana"
+                >Enquire about Noir Sultana <span>&nearr;</span></a
+              >
             </div>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <article class="coll-card will-reveal d1">
-          <div class="product-scene scene-rose">
-            <div class="scene-top"><span>02 / Floral</span><span>Eau de Parfum</span></div>
-            <div class="product-visual" data-bottle="rose">
-              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>ROSE SULTANA</span></div></div>
+      <!-- ================= COLLECTIONS ================= -->
+      <section class="section collections" id="collections">
+        <div class="container">
+          <div class="collection-heading">
+            <div>
+              <span class="eyebrow will-reveal">The Collections</span>
+              <h2 class="will-reveal d1">
+                Find your<br /><em>after-dark signature.</em>
+              </h2>
             </div>
-            <span class="scene-word" aria-hidden="true">Floral</span>
+            <p class="will-reveal d2">
+              Three distinct moods.<br />Choose the one that feels like you.
+            </p>
           </div>
-          <div class="product-info">
-            <span class="scent-mood">Velvet petals. A wild heart.</span>
-            <h3>Rose Sultana</h3>
-            <p>Taif Rose &middot; Raspberry &middot; Musk</p>
-            <div class="product-bottom">
-              <span>From Rs 11,500</span>
-              <a href="#enquire">Discover <span>&nearr;</span></a>
-            </div>
-          </div>
-        </article>
 
-        <article class="coll-card will-reveal d1">
-          <div class="product-scene scene-amber">
-            <div class="scene-top"><span>03 / Amber</span><span>Eau de Parfum</span></div>
-            <div class="product-visual" data-bottle="amber">
-              <div class="bottle-fallback" aria-hidden="true"><i></i><div><small>EAU DE PARFUM</small><b>EXOTICA</b><span>AMBER D'OR</span></div></div>
-            </div>
-            <span class="scene-word" aria-hidden="true">Amber</span>
+          <div class="coll-grid">
+            <article class="coll-card will-reveal">
+              <div class="product-scene scene-oud">
+                <img
+                  class="ingredient-image"
+                  src="assets/notes-oud.webp"
+                  width="900"
+                  height="600"
+                  alt="Oud wood, saffron and leather in a dark editorial still life"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="scene-top">
+                  <span>01 / Woody</span><span>Eau de Parfum</span>
+                </div>
+
+                <span class="scene-word" aria-hidden="true">Woody</span>
+              </div>
+              <div class="product-info">
+                <div class="product-thumbnail" data-bottle="oud">
+                  <img
+                    class="bottle-image"
+                    src="assets/bottle-oud.webp"
+                    width="700"
+                    height="800"
+                    alt="Oud Royale perfume bottle concept"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="scent-mood">Deep. Smoldering. Magnetic.</span>
+                <h3>Oud Royale</h3>
+                <p>Cambodian Oud &middot; Saffron &middot; Leather</p>
+                <div class="product-bottom">
+                  <span>From Rs 12,900</span>
+                  <a href="#enquire" data-interest="Oud Royale"
+                    >Enquire <span>&nearr;</span></a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="coll-card will-reveal d1">
+              <div class="product-scene scene-rose">
+                <img
+                  class="ingredient-image"
+                  src="assets/notes-rose.webp"
+                  width="900"
+                  height="600"
+                  alt="Crimson rose petals and raspberries in an editorial still life"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="scene-top">
+                  <span>02 / Floral</span><span>Eau de Parfum</span>
+                </div>
+
+                <span class="scene-word" aria-hidden="true">Floral</span>
+              </div>
+              <div class="product-info">
+                <div class="product-thumbnail" data-bottle="rose">
+                  <img
+                    class="bottle-image"
+                    src="assets/bottle-rose.webp"
+                    width="700"
+                    height="800"
+                    alt="Rose Sultana perfume bottle concept"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="scent-mood">Velvet petals. A wild heart.</span>
+                <h3>Rose Sultana</h3>
+                <p>Taif Rose &middot; Raspberry &middot; Musk</p>
+                <div class="product-bottom">
+                  <span>From Rs 11,500</span>
+                  <a href="#enquire" data-interest="Rose Sultana"
+                    >Enquire <span>&nearr;</span></a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="coll-card will-reveal d1">
+              <div class="product-scene scene-amber">
+                <img
+                  class="ingredient-image"
+                  src="assets/notes-amber.webp"
+                  width="900"
+                  height="600"
+                  alt="Golden amber resin, vanilla pods and tonka beans in an editorial still life"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="scene-top">
+                  <span>03 / Amber</span><span>Eau de Parfum</span>
+                </div>
+
+                <span class="scene-word" aria-hidden="true">Amber</span>
+              </div>
+              <div class="product-info">
+                <div class="product-thumbnail" data-bottle="amber">
+                  <img
+                    class="bottle-image"
+                    src="assets/bottle-amber.webp"
+                    width="700"
+                    height="800"
+                    alt="Amber d’Or perfume bottle concept"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="scent-mood">Golden warmth. Endless evening.</span>
+                <h3>Amber d&rsquo;Or</h3>
+                <p>Golden Amber &middot; Vanilla &middot; Tonka</p>
+                <div class="product-bottom">
+                  <span>From Rs 10,900</span>
+                  <a href="#enquire" data-interest="Amber d’Or"
+                    >Enquire <span>&nearr;</span></a
+                  >
+                </div>
+              </div>
+            </article>
           </div>
-          <div class="product-info">
-            <span class="scent-mood">Golden warmth. Endless evening.</span>
-            <h3>Amber d&rsquo;Or</h3>
-            <p>Golden Amber &middot; Vanilla &middot; Tonka</p>
-            <div class="product-bottom">
-              <span>From Rs 10,900</span>
-              <a href="#enquire">Discover <span>&nearr;</span></a>
-            </div>
+
+          <p class="concept-note">
+            Fragrance still lifes and flacon concepts. Final product packaging
+            may differ.
+          </p>
+        </div>
+      </section>
+
+      <!-- ================= THE MAISON ================= -->
+      <section class="section" id="maison">
+        <div class="container story-grid">
+          <div class="story-mark will-reveal">
+            <img
+              src="assets/logo.png"
+              width="260"
+              height="260"
+              loading="lazy"
+              decoding="async"
+              alt="House of Vivian Exotica crest"
+            />
+            <small>House of Vivian<br />Maison de Parfum</small>
           </div>
-        </article>
+          <div class="story-copy">
+            <span class="eyebrow will-reveal">Inside the Maison</span>
+            <h2 class="will-reveal d1">
+              Not just worn.<br /><em>Remembered.</em>
+            </h2>
+            <p class="will-reveal d2">
+              Inspired by the Silk Roads and the intimacy of oriental perfumery,
+              House of Vivian Exotica explores the meeting of rare resins, rich
+              florals and warm woods.
+            </p>
+            <p class="will-reveal d2">
+              Each composition is a world of its own. A personal ritual. A
+              presence that lingers long after you have left.
+            </p>
+            <a class="text-link will-reveal d3" href="#enquire"
+              >Begin your fragrance journey <span>&nearr;</span></a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section questions"
+        id="questions"
+        aria-labelledby="questions-title"
+      >
+        <div class="container questions-grid">
+          <div>
+            <span class="eyebrow">A little more to know</span>
+            <h2 id="questions-title">Before you<br /><em>choose.</em></h2>
+          </div>
+          <div class="question-list">
+            <details>
+              <summary>Which fragrance should I explore?</summary>
+              <p>
+                For woods, explore Oud Royale with Cambodian oud, saffron and
+                leather. Rose Sultana pairs Taif rose with raspberry and musk.
+                Amber d’Or brings golden amber, vanilla and tonka. Noir Sultana
+                is the house signature, with rose, smoked oud and golden amber.
+              </p>
+            </details>
+            <details>
+              <summary>What format is Noir Sultana?</summary>
+              <p>
+                Noir Sultana is presented here as a 100 ML eau de parfum at Rs
+                14,500. The bottles shown are design concepts; final packaging
+                may differ.
+              </p>
+            </details>
+            <details>
+              <summary>Can I enquire about a discovery set?</summary>
+              <p>
+                Yes. Choose “Discovery Set” in the enquiry preview below. Set
+                contents and availability are not yet listed on this demo.
+              </p>
+            </details>
+            <details id="delivery">
+              <summary>Delivery &amp; returns</summary>
+              <p>
+                Delivery areas, charges, dispatch times and return terms have
+                not yet been provided for this demo. Confirm these details with
+                the house before ordering.
+              </p>
+            </details>
+            <details>
+              <summary>Can I place an order on this website?</summary>
+              <p>
+                This is a fragrance showcase. The enquiry preview does not send
+                or store your details, and online checkout is not currently
+                available.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ENQUIRE ================= -->
+      <section class="section contact" id="enquire">
+        <div class="container contact-grid">
+          <div class="contact-copy">
+            <span class="eyebrow will-reveal">Your Invitation</span>
+            <h2 class="will-reveal d1">
+              An introduction<br /><em>to the extraordinary.</em>
+            </h2>
+            <p class="will-reveal d2">
+              Explore a fragrance or enquire about the discovery set.
+            </p>
+          </div>
+          <form id="enquiryForm" class="will-reveal d2">
+            <label for="interest">I'm interested in</label>
+            <select id="interest" name="interest">
+              <option>Discovery Set</option>
+              <option>Noir Sultana</option>
+              <option>Oud Royale</option>
+              <option>Rose Sultana</option>
+              <option>Amber d&rsquo;Or</option>
+            </select>
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+            <button class="btn btn--solid" type="submit">
+              Preview Enquiry
+            </button>
+            <p
+              id="enquiryStatus"
+              class="form-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <p class="form-note">
+              Demo only &mdash; this form does not send or store your details.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-top">
+        <a class="footer-brand" href="#top"
+          >Vivian <em>Exotica</em
+          ><small>A maison of rare attars · Lahore</small></a
+        >
+        <nav aria-label="Footer">
+          <a href="#signature">The signature</a
+          ><a href="#collections">Collections</a><a href="#maison">The maison</a
+          ><a href="#questions">FAQs</a
+          ><a href="#delivery">Delivery &amp; returns</a
+          ><a href="#enquire">Enquire</a>
+        </nav>
       </div>
-
-      <p class="concept-note">Interactive 3D flacons concept. Final product packaging may differ.</p>
-    </div>
-  </section>
-
-  <!-- ================= THE MAISON ================= -->
-  <section class="section" id="maison">
-    <div class="container story-grid">
-      <div class="story-mark will-reveal">
-        <span>V</span>
-        <small>House of Vivian<br>Maison de Parfum</small>
+      <div class="container footer-bottom">
+        <span>© 2026 House of Vivian Exotica</span
+        ><span>Fragrance &amp; flacon concepts</span
+        ><a href="sitemap.xml">Site map</a>
       </div>
-      <div class="story-copy">
-        <span class="eyebrow will-reveal">Inside the Maison</span>
-        <h2 class="will-reveal d1">Not just worn.<br><em>Remembered.</em></h2>
-        <p class="will-reveal d2">Inspired by the Silk Roads and the intimacy of oriental perfumery, House of Vivian Exotica explores the meeting of rare resins, rich florals and warm woods.</p>
-        <p class="will-reveal d2">Each composition is a world of its own. A personal ritual. A presence that lingers long after you have left.</p>
-        <a class="text-link will-reveal d3" href="#enquire">Begin your fragrance journey <span>&nearr;</span></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ENQUIRE ================= -->
-  <section class="section contact" id="enquire">
-    <div class="container contact-grid">
-      <div class="contact-copy">
-        <span class="eyebrow will-reveal">Your Invitation</span>
-        <h2 class="will-reveal d1">An introduction<br><em>to the extraordinary.</em></h2>
-        <p class="will-reveal d2">Explore a fragrance or enquire about the discovery set.</p>
-      </div>
-      <form id="enquiryForm" class="will-reveal d2">
-        <label for="interest">I'm interested in</label>
-        <select id="interest" name="interest">
-          <option>Discovery Set</option>
-          <option>Noir Sultana</option>
-          <option>Oud Royale</option>
-          <option>Rose Sultana</option>
-          <option>Amber d&rsquo;Or</option>
-        </select>
-        <label for="email">Email address</label>
-        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-        <button class="btn btn--solid" type="submit">Preview Enquiry</button>
-        <p class="form-note">Demo only &mdash; this form does not send or store your details.</p>
-      </form>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="container foot">
-    <span class="footer-brand">Vivian <em>Exotica</em></span>
-    <span>&copy; 2026 House of Vivian Exotica</span>
-    <a href="mailto:hello@example.com">Contact</a>
-  </div>
-</footer>
-
-<script src="js/site.js"></script>
-<script type="importmap">
-  {"imports":{"three":"./js/vendor/three.module.js","three/addons/":"./js/vendor/addons/"}}
-</script>
-<script type="module" src="js/bottles.js"></script>
-</body>
+    </footer>
+    <script type="module" src="js/site.js"></script>
+  </body>
 </html>
