@@ -41,9 +41,10 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   status.textContent = `Preview ready for ${interest.value}. This is a demo; no enquiry has been sent and no details have been stored.`;
 });
-document.querySelectorAll('a[href="#delivery"]').forEach((link) =>
+document.querySelectorAll('a[href="#delivery"], a[href="/#delivery"]').forEach((link) =>
   link.addEventListener("click", () => {
-    document.getElementById("delivery").open = true;
+    const delivery = document.getElementById("delivery");
+    if (delivery) delivery.open = true;
   }),
 );
 
@@ -57,6 +58,7 @@ const constrained = () =>
   (navigator.deviceMemory && navigator.deviceMemory < 4) ||
   (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4);
 const host = document.getElementById("heroBottle");
+if (host) {
 const preview = document.createElement("button");
 preview.type = "button";
 preview.textContent = "Explore in 3D";
@@ -123,8 +125,11 @@ const observer = new IntersectionObserver(([entry]) => {
 observer.observe(host);
 preview.hidden = constrained();
 
+}
+
 // Continuously billowing smoke. Load only when visible and motion is allowed.
 const hero = document.getElementById("hero");
+if (hero) {
 const smokeVideo = document.querySelector(".smoke-video");
 const smokeToggle = document.querySelector(".smoke-toggle");
 const bottleMotion = document.querySelector("[data-motion-toggle]");
@@ -133,7 +138,7 @@ let heroVisible = false;
 const smokeRestricted = () => reduced.matches || connection?.saveData;
 function syncSmoke() {
   const bottlePaused =
-    !bottleMotion.hidden &&
+    bottleMotion && !bottleMotion.hidden &&
     bottleMotion.getAttribute("aria-pressed") === "true";
   const allowed = !smokeRestricted();
   smokeToggle.hidden = !allowed;
@@ -178,13 +183,15 @@ new IntersectionObserver(([entry]) => {
   heroVisible = entry.isIntersecting;
   syncSmoke();
 }).observe(hero);
-new MutationObserver(syncSmoke).observe(bottleMotion, {
+if (bottleMotion) new MutationObserver(syncSmoke).observe(bottleMotion, {
   attributes: true,
   attributeFilter: ["aria-pressed", "hidden"],
 });
 reduced.addEventListener("change", syncSmoke);
 connection?.addEventListener?.("change", syncSmoke);
 document.addEventListener("visibilitychange", syncSmoke);
+
+}
 
 // Short, once-only entrances; native scrolling and no perpetual transforms.
 if (!reduced.matches && "IntersectionObserver" in window) {
@@ -203,3 +210,33 @@ if (!reduced.matches && "IntersectionObserver" in window) {
     entrances.observe(element);
   });
 }
+
+// Campaign photography uses two compositor transforms, with no scroll listeners.
+const campaign = document.getElementById('campaign');
+if (campaign) {
+const campaignToggle = campaign.querySelector('.campaign-toggle');
+let campaignVisible = false;
+let campaignPaused = false;
+function syncCampaign() {
+  const allowed = !constrained();
+  campaignToggle.hidden = !allowed;
+  campaign.classList.toggle('is-moving', allowed && campaignVisible && !campaignPaused && !document.hidden);
+}
+new IntersectionObserver(([entry]) => {
+  campaignVisible = entry.isIntersecting;
+  syncCampaign();
+}, {threshold:0.05}).observe(campaign);
+campaignToggle.addEventListener('click', () => {
+  campaignPaused = !campaignPaused;
+  campaignToggle.setAttribute('aria-pressed', String(campaignPaused));
+  campaignToggle.textContent = campaignPaused ? 'Resume campaign motion' : 'Pause campaign motion';
+  syncCampaign();
+});
+reduced.addEventListener('change', syncCampaign);
+connection?.addEventListener?.('change', syncCampaign);
+document.addEventListener('visibilitychange', syncCampaign);
+syncCampaign();
+
+}
+
+if (location.hash === "#delivery") { const delivery = document.getElementById("delivery"); if (delivery) delivery.open = true; }

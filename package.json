@@ -8,7 +8,7 @@
     "start": "http-server -p 5000",
     "dev": "vite",
     "build:3d": "esbuild js/bottles.js --bundle --minify --format=esm --outfile=js/bottle-scene.min.js",
-    "test:browser": "node scripts/verify.mjs"
+    "test:browser": "node scripts/verify-collections.mjs"
   },
   "dependencies": {
     "http-server": "^14.1.1",

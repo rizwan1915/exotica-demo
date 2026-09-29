@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://exotica-demo.vercel.app/</loc></url>
+<url><loc>https://exotica-demo.vercel.app/</loc></url>
+<url><loc>https://exotica-demo.vercel.app/perfumes.html</loc></url>
+<url><loc>https://exotica-demo.vercel.app/body-sprays.html</loc></url>
+<url><loc>https://exotica-demo.vercel.app/oud.html</loc></url>
 </urlset>

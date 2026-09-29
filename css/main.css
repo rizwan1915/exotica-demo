@@ -1373,3 +1373,154 @@ details p {
     transform: none;
   }
 }
+
+/* Category-led storefront: lightweight photography, native scrolling. */
+.range-hero { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:center; gap:12px; padding:45px 0 15px; }
+.range-item { min-width:0; display:block; }
+.range-item:nth-child(2) { margin-top:75px; }
+.range-item:nth-child(3) { margin-top:145px; }
+.range-item img { width:100%; height:auto; border-radius:100px 100px 0 0; }
+.range-item span { display:block; padding:14px 0; font-family:var(--serif); font-size:clamp(16px,1.7vw,25px); text-align:center; color:var(--gold-light); }
+.range-caption { grid-column:1/-1; display:flex; justify-content:space-between; gap:10px; font-size:10px; color:var(--muted); letter-spacing:.06em; padding-top:16px; border-top:1px solid var(--rule); }
+.range-caption span { font-size:9px; }
+.hero-copy h1 { font-size:clamp(46px,5.3vw,78px); }
+.category-section { background:#f3eadd; color:#39171a; }
+.category-section .eyebrow { color:#87362b; }
+.category-section :focus-visible { outline-color:#8e211e; }
+.category-heading { display:flex; justify-content:space-between; align-items:end; gap:28px; margin-bottom:45px; }
+.category-heading p { color:#715852; max-width:320px; }
+.category-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; }
+.category-image { display:block; overflow:hidden; background:#e7d7c1; }
+.category-image img { width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; transition:transform .5s ease; }
+@media (hover:hover) { .category-image:hover img { transform:scale(1.025); } }
+.category-number { display:block; margin:22px 0 10px; font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:#855e4c; }
+.category-card h3 { font-size:clamp(30px,3vw,43px); }
+.category-card p { color:#715852; margin:12px 0 20px; min-height:52px; font-size:13px; }
+.category-link { display:flex; gap:10px; justify-content:space-between; padding:12px 0; border-top:1px solid #a97e5c66; font-size:12px; }
+.category-link:hover { color:#a62520; }
+.category-disclaimer { font-size:11px; color:#715852; margin-top:30px; }
+.campaign { display:grid; grid-template-columns:1.15fr 1fr; background:#9e090c; overflow:hidden; }
+.campaign-frame { overflow:hidden; }
+.campaign-portrait { min-height:650px; }
+.campaign-portrait img { width:100%; height:100%; object-fit:cover; object-position:51% center; }
+.campaign-copy { display:flex; flex-direction:column; align-items:flex-start; padding:70px clamp(24px,4vw,70px) 28px; }
+.campaign-copy .eyebrow { color:#f4cc91; }
+.campaign-copy h2 { font-size:clamp(38px,3.6vw,56px); }
+.campaign-copy p { margin:24px 0; color:#fae5d6; }
+.campaign-copy .btn { background:#f0d19d; color:#401015; border-color:#f0d19d; }
+.campaign-seal { width:190px; margin:35px 0 20px; align-self:flex-end; }
+.campaign-seal img { width:100%; height:auto; }
+.campaign-toggle { background:transparent; color:#fae5d6; border:0; border-bottom:1px solid #fae5d680; padding:8px 0; font-size:11px; }
+.campaign-motion { animation:campaign-drift 14s ease-in-out infinite alternate; animation-play-state:paused; }
+.campaign.is-moving .campaign-motion { animation-play-state:running; }
+.campaign-seal .campaign-motion { animation-direction:alternate-reverse; }
+@keyframes campaign-drift { from { transform:scale(1); } to { transform:scale(1.035); } }
+.signature-art .hero-art-caption { position:relative; padding:10px 25px; flex-wrap:wrap; gap:12px; }
+@media(max-width:1000px) {
+  .campaign-portrait { min-height:580px; }
+  .category-grid { gap:18px; }
+}
+@media(max-width:760px) {
+  .range-hero { width:100%; padding:0; gap:9px; margin-top:12px; }
+  .range-item:nth-child(2) { margin-top:30px; }
+  .range-item:nth-child(3) { margin-top:60px; }
+  .range-caption { font-size:9px; letter-spacing:0; }
+  .hero-copy h1 { font-size:clamp(42px,10vw,65px); }
+  .category-heading { display:block; margin-bottom:28px; }
+  .category-heading p { margin-top:22px; font-size:13px; }
+  .category-grid { grid-template-columns:1fr; gap:34px; }
+  .category-card { display:grid; grid-template-columns:42% minmax(0,1fr); column-gap:18px; align-content:center; }
+  .category-image { grid-column:1; grid-row:1/5; align-self:center; }
+  .category-number { font-size:8px; margin:4px 0 10px; letter-spacing:.08em; }
+  .category-card h3 { font-size:30px; }
+  .category-card p { font-size:12px; line-height:1.6; margin:10px 0; min-height:0; }
+  .category-link { font-size:11px; line-height:1.5; padding:10px 0 0; }
+  .campaign { grid-template-columns:1fr; }
+  .campaign-portrait { min-height:0; aspect-ratio:4/3; }
+  .campaign-copy { padding:34px 24px 24px; }
+  .campaign-copy h2 { font-size:43px; }
+  .campaign-seal { width:140px; margin-top:25px; }
+  .campaign-toggle { margin-top:-35px; }
+}
+@media(prefers-reduced-motion:reduce) { .campaign-motion { animation:none; } .category-image img { transition:none; } }
+.category-section h2 em { color:#98552e; }
+
+/* Standalone collection pages */
+.collection-intro { padding-top:155px; padding-bottom:35px; }
+.breadcrumb { color:var(--muted); font-size:12px; }
+.catalog-heading { display:flex; align-items:end; justify-content:space-between; gap:40px; margin:40px 0; }
+.catalog-heading h1 { font-size:clamp(58px,7vw,104px); }
+.catalog-tagline { font:italic 26px var(--serif); color:var(--gold-light); margin-top:20px; }
+.catalog-heading > p { max-width:290px; color:var(--muted); }
+.collection-tabs { display:flex; flex-wrap:wrap; gap:28px; border-bottom:1px solid var(--rule); }
+.collection-tabs a { padding:14px 0; color:var(--muted); }
+.collection-tabs a[aria-current] { color:var(--gold-light); border-bottom:2px solid var(--gold); }
+.nav-links a[aria-current] { color:var(--gold-light); text-decoration:underline; text-underline-offset:7px; }
+.catalog-section { padding-bottom:90px; }
+.catalog-count { display:flex; justify-content:space-between; margin-bottom:25px; color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
+.catalog-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px; }
+.catalog-card { min-width:0; }
+.catalog-photo { position:relative; background:#eadbc3; aspect-ratio:4/5; overflow:hidden; }
+.catalog-photo img { width:100%; height:100%; object-fit:cover; }
+.catalog-photo.perfume-photo { background:radial-gradient(ellipse,#4e2330,#24121b); }
+.catalog-photo.perfume-photo img { object-fit:contain; padding:16px; }
+.catalog-photo > span { position:absolute; top:12px; left:14px; color:#664729; font-size:11px; }
+.perfume-photo > span { color:var(--gold); }
+.catalog-info { padding:22px 0; }
+.catalog-info .eyebrow { font-size:9px; margin-bottom:12px; }
+.catalog-info h2 { font-size:28px; line-height:1.15; letter-spacing:-.025em; }
+.catalog-info p { color:var(--muted); font-size:12px; min-height:48px; margin-top:14px; }
+.catalog-price { display:block; color:var(--gold-light); font-size:12px; margin:16px 0; }
+.catalog-info .text-link { font-size:11px; display:flex; justify-content:space-between; gap:10px; }
+.catalog-note { color:var(--muted); font-size:12px; max-width:800px; margin-top:24px; }
+/* The portrait and red/gold references become one campaign scene. */
+.campaign-story { position:relative; display:block; background:#520707; min-height:640px; isolation:isolate; }
+.campaign-story .campaign-backdrop { position:absolute; inset:0; z-index:-2; }
+.campaign-backdrop img { width:100%; height:100%; object-fit:cover; object-position:center 44%; }
+.campaign-story::after { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,#350304a6,transparent 68%); pointer-events:none; }
+.campaign-story .campaign-copy { width:47%; padding:85px 0 35px; margin-left:max(40px,calc((100vw - 1320px)/2)); }
+.campaign-story h2 { font-size:clamp(44px,4.5vw,70px); }
+.campaign-story .campaign-copy p { max-width:350px; }
+.campaign-signoff { display:block; font-size:10px; letter-spacing:.18em; margin-top:40px; color:var(--gold-light); }
+.campaign-signoff strong { display:block; font:44px var(--serif); letter-spacing:-.03em; }
+.campaign-story .campaign-toggle { margin:25px 0 0; }
+@media(max-width:1000px) {
+ .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; }
+ .campaign-story .campaign-copy { margin-left:30px; }
+ .campaign-story { min-height:560px; }
+ .campaign-story h2 { font-size:46px; }
+}
+@media(max-width:760px) {
+ .collection-intro { padding-top:120px; }
+ .catalog-heading { display:block; margin:28px 0; }
+ .catalog-heading > p { margin-top:24px; font-size:13px; }
+ .catalog-tagline { font-size:23px; }
+ .collection-tabs { gap:24px; font-size:13px; }
+ .campaign-story { display:flex; flex-direction:column; min-height:0; }
+ .campaign-story .campaign-backdrop { position:relative; inset:auto; z-index:0; width:100%; aspect-ratio:1.25; }
+ .campaign-backdrop img { object-position:78% center; }
+ .campaign-story::after { display:none; }
+ .campaign-story .campaign-copy { width:auto; margin:0; padding:32px 24px; background:linear-gradient(135deg,#670706,#350404); }
+ .campaign-story h2 { font-size:46px; }
+ .campaign-signoff { margin-top:30px; }
+ .campaign-story .campaign-toggle { margin-top:20px; }
+}
+@media(max-width:600px) {
+ .catalog-grid { grid-template-columns:1fr; gap:26px; }
+ .catalog-photo { max-height:470px; }
+ .catalog-photo img { object-fit:contain; }
+ .catalog-info h2 { font-size:34px; }
+ .catalog-info p { min-height:0; }
+ .catalog-info .text-link { font-size:13px; }
+}
+
+/* Scent-led colour system: accents follow the existing fragrance notes. */
+.fragrance-noir { --scent-accent:#dc8e8b; }
+.fragrance-oud { --scent-accent:#cead7a; }
+.fragrance-rose { --scent-accent:#f0a3b6; }
+.fragrance-amber { --scent-accent:#eabb62; }
+.catalog-card[class*="fragrance-"] .eyebrow,
+.catalog-card[class*="fragrance-"] .catalog-price { color:var(--scent-accent); }
+.catalog-card[class*="fragrance-"] .catalog-info { border-top:2px solid var(--scent-accent); }
+.catalog-photo.editorial-bottle img { padding:0; object-fit:cover; }
+.catalog-photo.editorial-bottle > span { background:#190b10bb; color:#f3eadd; padding:3px 7px; }
